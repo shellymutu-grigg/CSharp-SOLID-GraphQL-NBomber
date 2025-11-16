@@ -50,7 +50,7 @@ public class GraphQLLoadTests
 
         var result = NBomberRunner
             .RegisterScenarios(scenario)
-            .WithReportFolder("reports")
+            .WithReportFolder("reports") // rel="noopener"
             .Run();
 
         var scnStats = result.ScenarioStats
