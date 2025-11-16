@@ -12,3 +12,5 @@ src/CSharp.Infrastructure/bin/*
 src/CSharp.Infrastructure/obj/*
 tests/CSharp.Tests/bin/*
 tests/CSharp.Tests/obj/*
+reports/*
+.fake

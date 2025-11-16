@@ -2,11 +2,15 @@
 using NBomber.Http;
 using NBomber.Http.CSharp;
 using NBomber.Plugins.Network.Ping;
+using System;
+using System.IO;
+using System.Net.Http;
+using System.Threading.Tasks;
 using System.Text;
 
-var httpClient = new HttpClient();
+Directory.CreateDirectory("reports");
 
-Console.WriteLine(typeof(NBomberRunner).Assembly.GetName().Version);
+var httpClient = new HttpClient();
 
 var scenario = Scenario.Create("graphql_orders", async context =>
 {
@@ -20,17 +24,12 @@ var scenario = Scenario.Create("graphql_orders", async context =>
 })
 .WithWarmUpDuration(TimeSpan.FromSeconds(3))
 .WithLoadSimulations(
-    Simulation.RampingInject(rate: 50, interval: TimeSpan.FromSeconds(1), during: TimeSpan.FromMinutes(1)),
-    Simulation.Inject(rate: 50, interval: TimeSpan.FromSeconds(1), during: TimeSpan.FromMinutes(1)),
-    Simulation.RampingInject(rate: 0, interval: TimeSpan.FromSeconds(1), during: TimeSpan.FromMinutes(1))
+    Simulation.RampingInject(50, TimeSpan.FromSeconds(1), TimeSpan.FromMinutes(1)),
+    Simulation.Inject(50, TimeSpan.FromSeconds(1), TimeSpan.FromMinutes(1)),
+    Simulation.RampingInject(0, TimeSpan.FromSeconds(1), TimeSpan.FromMinutes(1))
 );
 
 NBomberRunner
     .RegisterScenarios(scenario)
-    .WithReportFolder("reports")      // <-- Creates HTML, TXT, JSON automatically
-    .WithWorkerPlugins(
-        new PingPlugin(PingPluginConfig.CreateDefault("nbomber.com")),
-        new HttpMetricsPlugin([HttpVersion.Version1])
-    )
+    .WithReportFolder("reports")
     .Run();
-

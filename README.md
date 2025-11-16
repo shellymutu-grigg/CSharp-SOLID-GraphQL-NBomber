@@ -200,6 +200,10 @@ dotnet restore
 
 dotnet build
 
+# Run the API  
 dotnet run --project src/CSharp.Api
 
 http://localhost:<ACTIVE_PORT>/swagger
+
+# Run the NBomber Load Tests;
+dotnet run --project CSharp.LoadTests
