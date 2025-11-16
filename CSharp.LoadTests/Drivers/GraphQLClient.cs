@@ -2,6 +2,7 @@ using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using CSharp.LoadTests.Core; 
 using CSharp.LoadTests.Interfaces;
 
 namespace CSharp.LoadTests.Drivers;

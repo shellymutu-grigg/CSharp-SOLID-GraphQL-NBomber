@@ -6,14 +6,9 @@ using CSharp.LoadTests.Interfaces;
 
 namespace CSharp.LoadTests.Scenarios;
 
-public class GraphQLOrderScenario : IScenarioBuilder
+public class GraphQLOrderScenario(IGraphQLClient graphQL) : IScenarioBuilder
 {
-    private readonly IGraphQLClient _graphQL;
-
-    public GraphQLOrderScenario(IGraphQLClient graphQL)
-    {
-        _graphQL = graphQL;
-    }
+    private readonly IGraphQLClient _graphQL = graphQL;
 
     public ScenarioProps Build()
     {
