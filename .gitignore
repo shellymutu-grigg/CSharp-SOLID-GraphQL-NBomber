@@ -1,0 +1,14 @@
+.DS_Store
+CSharp.LoadTests/bin/*
+CSharp.LoadTests/obj/*
+CSharp.LoadTests/reports/*
+src/CSharp.Api/bin/*
+src/CSharp.Api/obj/*
+src/CSharp.Application/bin/*
+src/CSharp.Application/obj/*
+src/CSharp.Core/bin/*
+src/CSharp.Core/obj/*
+src/CSharp.Infrastructure/bin/*
+src/CSharp.Infrastructure/obj/*
+tests/CSharp.Tests/bin/*
+tests/CSharp.Tests/obj/*

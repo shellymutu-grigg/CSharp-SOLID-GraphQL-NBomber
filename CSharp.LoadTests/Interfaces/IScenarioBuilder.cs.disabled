@@ -1,0 +1,8 @@
+using NBomber.CSharp;
+
+namespace CSharp.LoadTests.Interfaces;
+
+public interface IScenarioBuilder
+{
+    Scenario Build();
+}

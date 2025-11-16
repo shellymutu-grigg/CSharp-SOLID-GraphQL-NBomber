@@ -1,0 +1,24 @@
+using NBomber.CSharp;
+using CSharp.LoadTests.Interfaces;
+
+namespace CSharp.LoadTests.Runners;
+
+public class LoadTestRunner
+{
+    private readonly Scenario[] _scenarios;
+
+    public LoadTestRunner(IEnumerable<IScenarioBuilder> builders)
+    {
+        _scenarios = builders
+            .Select(b => b.Build())   // returns NBomber.CSharp.Scenario
+            .ToArray();
+    }
+
+    public void Run()
+    {
+        NBomberRunner
+            .RegisterScenarios(_scenarios)
+            .WithReportFolder("reports")
+            .Run();
+    }
+}
