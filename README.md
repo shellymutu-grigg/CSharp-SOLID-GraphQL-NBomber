@@ -31,7 +31,7 @@ The test suite uses `xUnit`.
 It demonstrates TDD thinking, validator testing, and mocking through interfaces.
 
 ### ✔ Foundation for Kafka or RabbitMQ integration
-The Infrastructure folder includes stubs and extension points for message producers.  
+TODO: Create stubs and extension points for message producers.  
 This shows readiness for event-driven and distributed workflows.
 
 ### ✔ Strong engineering practices
