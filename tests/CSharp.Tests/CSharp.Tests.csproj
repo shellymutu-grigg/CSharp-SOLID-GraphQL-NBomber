@@ -23,6 +23,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\CSharp.Core\CSharp.Core.csproj" />
     <ProjectReference Include="..\..\src\CSharp.Application\CSharp.Application.csproj" />
+    <ProjectReference Include="..\..\CSharp.LoadTests\CSharp.LoadTests.csproj" />
   </ItemGroup>
 
 </Project>

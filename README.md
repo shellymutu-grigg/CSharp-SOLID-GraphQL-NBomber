@@ -45,24 +45,24 @@ The project demonstrates:
 
 ---
 
-## Architecture Overview
+## API Architecture Overview
 
-         +---------------------+
-         |      API Layer      |
-         |   CSharp.Api        |
-         +----------+----------+
+         +------------------+
+         |    API Layer     |
+         |   CSharp.Api     |
+         +----------+-------+
                     |
                     v
-    +---------------------------------------+
-    |            Application Layer          |
-    |        CSharp.Application             |
-    +------------------+--------------------+
+    +---------------------------------+
+    |         Application Layer       |
+    |        CSharp.Application       |
+    +------------------+--------------+
                        |
                        v
-           +-----------------------+
-           |       Core Layer      |
-           |    CSharp.Core        |
-           +-----------+-----------+
+           +---------------------+
+           |     Core Layer      |
+           |    CSharp.Core      |
+           +-----------+---------+
                        ^
                        |
     +---------------------------------------+
@@ -74,18 +74,18 @@ The project demonstrates:
              |                         |
              +-------------------------+
                    Tests Layer
-               CSharp.Tests
+                     CSharp.Tests
 
 
 ## SOLID Definitions
 
-                     ┌────────────────────────────────┐
-                     │        S O L I D Principles    │
-                     └────────────────────────────────┘
+                     ┌──────────────────────────────────┐
+                     │        S O L I D Principles      │
+                     └──────────────────────────────────┘
                                       │
                                       │
       ┌──────────────────────────────────────────────────────────────────┐
-      │                            S — Single Responsibility             │ 
+      │                   S — Single Responsibility                      │ 
       │                                                                  │ 
       │ Each class handles one well-defined concern.                     │
       │                                                                  │
@@ -121,8 +121,7 @@ The project demonstrates:
       │                                                                  │
       │ Example in this project:                                         │
       │   IOrderValidator                                                │
-      │   IGraphQLOrderClient                                            │
-      │   IOrderEventProducer                                            │
+      │   IOrderService.                                                 │
       │   → Each interface focuses on a single behaviour.                │
       └──────────────────────────────────────────────────────────────────┘
 
@@ -136,7 +135,6 @@ The project demonstrates:
       │   not BasicOrderValidator (concrete).                            │
       │                                                                  │
       │   GraphQL client injected via interface.                         │
-      │   Kafka event producer injected via interface.                   │
       └──────────────────────────────────────────────────────────────────┘
 
       ---
@@ -169,8 +167,7 @@ All validators implement `IOrderValidator` and can be swapped at runtime or in t
 Small, focused interfaces improve clarity and maintainability.  
 **Examples:**  
 - `IOrderValidator`  
-- `IGraphQLOrderClient`  
-- `IOrderEventProducer`  
+- `IOrderService`  
 
 ---
 
@@ -207,3 +204,6 @@ http://localhost:<ACTIVE_PORT>/swagger
 
 # Run the NBomber Load Tests;
 dotnet run --project CSharp.LoadTests
+
+# Run tests/CSharp.Tests
+dotnet test 

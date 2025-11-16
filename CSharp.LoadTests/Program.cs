@@ -5,7 +5,6 @@ using NBomber.Contracts;
 using NBomber.CSharp;
 using CSharp.LoadTests.Core;
 using CSharp.LoadTests.Drivers;
-using CSharp.LoadTests.Runners;
 using CSharp.LoadTests.Scenarios;
 using CSharp.LoadTests.Interfaces;
 
@@ -17,11 +16,9 @@ var config = new TestConfig
 var httpClient = new DefaultHttpClient(new HttpClient());
 var graphQL = new GraphQLClient(httpClient, config);
 
-// register all scenario builders
-var builders = new IScenarioBuilder[]
-{
-    new GraphQLOrderScenario(graphQL)
-};
+var scenario = new GraphQLOrderScenario(graphQL).Build();
 
-var runner = new LoadTestRunner(builders);
-runner.Run();
+NBomberRunner
+    .RegisterScenarios(scenario)
+    .WithReportFolder("reports")
+    .Run();

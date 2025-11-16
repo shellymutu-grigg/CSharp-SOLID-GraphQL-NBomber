@@ -7,18 +7,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <!-- <ItemGroup>
-    <PackageReference Include="NBomber" Version="6.1.2" />
-    <PackageReference Include="NBomber.Http" Version="6.1.0" />
-  </ItemGroup>  --> 
-
-  <PropertyGroup>
-    <ImplicitUsings>enable</ImplicitUsings>
-  </PropertyGroup> 
-
   <ItemGroup>
-    <PackageReference Include="NBomber" Version="6.0.0" />
-    <PackageReference Include="NBomber.Http" Version="6.0.0" />
+    <PackageReference Include="NBomber" Version="6.1.0" />
+    <PackageReference Include="NBomber.Http" Version="6.1.0" />
   </ItemGroup>
 
 </Project>

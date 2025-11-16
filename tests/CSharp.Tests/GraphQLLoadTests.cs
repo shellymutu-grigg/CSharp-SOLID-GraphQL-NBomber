@@ -6,44 +6,51 @@ namespace CSharp.Tests;
 
 public class GraphQLLoadTests
 {
-    private const string BaseUrl = "http://localhost:5157/graphql";
+    private const string ApiUrl = "http://localhost:5157/graphql";
 
     [Fact]
-    public void Run_GraphQL_Orders_Load_Test()
+    public async Task Run_GraphQL_Orders_Load_Test()
     {
         using var httpClient = Http.CreateDefaultClient();
 
         const string graphQlPayload = """
-        {
-          "query": "query GetOrders($minTotal: Decimal!, $includeInvalid: Boolean!) {
-            orders(minTotal: $minTotal, includeInvalid: $includeInvalid) {
-              orderId
-              total
-              status
+            {
+            "query": "query GetOrders($minTotal: Decimal!, $includeInvalid: Boolean!) { orders(minTotal: $minTotal, includeInvalid: $includeInvalid) { orderId total status } }",
+            "variables": { "minTotal": 50, "includeInvalid": false }
             }
-          }",
-          "variables": { "minTotal": 50, "includeInvalid": false }
-        }
-        """;
+            """;
 
         var scenario =
             Scenario.Create("graphql_orders_scenario", async context =>
             {
                 var request =
-                    Http.CreateRequest("POST", BaseUrl)
+                    Http.CreateRequest("POST", ApiUrl)
                         .WithHeader("Content-Type", "application/json")
-                        .WithBody(new StringContent(graphQlPayload, Encoding.UTF8, "application/json"));
+                        .WithBody(new StringContent(
+                            graphQlPayload,
+                            Encoding.UTF8,
+                            "application/json"));
 
-                var response = await Http.Send(httpClient, request);
-                return response;
-            })
-            .WithWarmUpDuration(TimeSpan.FromSeconds(3))
-            .WithLoadSimulations(
-                Simulation.KeepConstant(copies: 5, during: TimeSpan.FromSeconds(15))
-            );
+                var nbResponse = await Http.Send(httpClient, request);
+
+                if (!nbResponse.IsError)
+                    return nbResponse;
+
+                if (!nbResponse.Payload.IsSome())
+                    return Response.Fail();
+
+                var httpResponse = nbResponse.Payload.Value;
+
+                var body = await httpResponse.Content.ReadAsStringAsync();
+                Console.WriteLine($"GraphQL Body: {body}");
+
+                return nbResponse;
+            });
+  
 
         var result = NBomberRunner
             .RegisterScenarios(scenario)
+            .WithReportFolder("reports")
             .Run();
 
         var scnStats = result.ScenarioStats
@@ -51,7 +58,7 @@ public class GraphQLLoadTests
 
         Assert.True(
             scnStats.Fail.Request.Count == 0,
-            $"NBomber: expected no failures but got {scnStats.Fail.Request.Count}"
+            $"Expected 0 failures but got {scnStats.Fail.Request.Count}"
         );
     }
 }

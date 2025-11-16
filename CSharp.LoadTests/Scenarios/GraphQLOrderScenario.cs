@@ -1,6 +1,4 @@
-using System;
 using NBomber.CSharp;
-using NBomber.Http.CSharp;
 using NBomber.Contracts;
 using CSharp.LoadTests.Interfaces;
 

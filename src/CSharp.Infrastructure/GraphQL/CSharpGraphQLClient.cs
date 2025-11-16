@@ -30,9 +30,7 @@ public class CSharpGraphQLClient(string endpoint)
         {
             OrderId = response.Data.order.orderId,
             Total   = (decimal)response.Data.order.total,
-            Items = ((IEnumerable<object?>)response.Data.order.items)
-                .Select(i => i?.ToString() ?? string.Empty)
-                .ToList()
+            Items = [.. ((IEnumerable<object?>)response.Data.order.items).Select(i => i?.ToString() ?? string.Empty)]
         };
     }
 }
